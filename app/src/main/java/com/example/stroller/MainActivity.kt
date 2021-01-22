@@ -23,9 +23,9 @@ import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
-    private var radius = 0
+    private var radius = 0.0
     private var wayPointsSize = 0
-    private var randomness = 0.0
+    private var randomness = 0.01
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         radius_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                radius = i
+                radius = i.toDouble()*1000          // convert to meters
                 radius_value.text = i.toString()
             }
 
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         waypoints_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                wayPointsSize = progress
+                wayPointsSize = if (progress > 3) progress else 3
                 waypoints_value.text = wayPointsSize.toString()
             }
 
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
         randomness_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, i: Int, fromUser: Boolean) {
-                randomness = i.toDouble() / 100.0
+                randomness = if(i == 0) 0.01 else i.toDouble() / 100.0
                 randomness_value.text = String.format("%.2f", randomness)
             }
 
@@ -105,14 +105,11 @@ class MainActivity : AppCompatActivity() {
         val wayPoints = generateWaypoints()
 
         var mapsUrl = "https://www.google.com/maps/dir/"
-        mapsUrl += "'" + lastLocation.latitude.toString() + "," + lastLocation.longitude + "'/"
 
         for(wayPoint in wayPoints)
         {
             mapsUrl += "'" + wayPoint.lat.toString() + "," + wayPoint.lon + "'/"
         }
-
-        mapsUrl += "'" + lastLocation.latitude.toString() + "," + lastLocation.longitude + "'/"
 
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(mapsUrl))
         startActivity(browserIntent)
@@ -126,29 +123,16 @@ class MainActivity : AppCompatActivity() {
         wayPoints.add(startEndPoint)
 
         // start heading
-        var heading = Random.nextDouble(0.0, 360.0)
+        var centerHeading = Random.nextDouble(0.0, 360.0)
+        var heading = (centerHeading + 180) % 360   // init with the direction to the start point
+        val centerPoint = translate(startEndPoint, radius/2, centerHeading)
+        val directionStepWidth = 360/wayPointsSize
 
-        for (i in 1..wayPointsSize)
+        for (i in 1 until wayPointsSize-1)
         {
-
-            var valid = false
-            var newPoint = GeoPoint(0.0,0.0)
-
-            while (!valid)
-            {
-                val transDist = Random.nextInt(100,500)
-
-                // create new direction and wrap it around 360 degrees
-                heading += Random.nextDouble(-180.0, 180.0)
-                heading %= 360
-
-                // create new waypoint and validate it
-                newPoint = translate(wayPoints[wayPoints.size-1], transDist.toDouble(), heading)
-                valid = wayPoints.size < 3
-                        || (distance(startEndPoint, newPoint) <= radius)
-                        //&& (!intersect(listOf(newPoint, wayPoints[wayPoints.size-1]), wayPoints)))
-            }
-
+            heading += directionStepWidth
+            val distance =  Random.nextDouble((1-randomness)*(radius/2), radius/2)
+            val newPoint = translate(centerPoint, distance, heading)
             wayPoints.add(newPoint)
         }
 
