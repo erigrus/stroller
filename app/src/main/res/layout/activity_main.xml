@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/generate_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="@string/generate_stroll"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/radius_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/radius_km"
+        app:layout_constraintBottom_toBottomOf="@+id/radius_bar"
+        app:layout_constraintEnd_toStartOf="@+id/radius_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/radius_bar" />
+
+    <TextView
+        android:id="@+id/radius_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="7dp"
+        android:text="@string/_0"
+        app:layout_constraintBottom_toBottomOf="@+id/radius_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/radius_bar"
+        app:layout_constraintTop_toTopOf="@+id/radius_bar" />
+
+    <SeekBar
+        android:id="@+id/radius_bar"
+        android:layout_width="177dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="61dp"
+        android:layout_marginBottom="588dp"
+        android:max="10"
+        app:layout_constraintBottom_toTopOf="@+id/generate_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.384" />
+
+    <TextView
+        android:id="@+id/waypoints_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/complexity"
+        app:layout_constraintStart_toStartOf="@+id/radius_text"
+        app:layout_constraintTop_toBottomOf="@+id/radius_text" />
+
+    <TextView
+        android:id="@+id/waypoints_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/_0"
+        app:layout_constraintEnd_toEndOf="@+id/radius_value"
+        app:layout_constraintStart_toStartOf="@+id/radius_value"
+        app:layout_constraintTop_toBottomOf="@+id/radius_value" />
+
+    <SeekBar
+        android:id="@+id/waypoints_bar"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="0dp"
+        android:layout_height="21dp"
+        android:max="10"
+        android:progress="0"
+        app:layout_constraintBottom_toBottomOf="@+id/waypoints_text"
+        app:layout_constraintEnd_toEndOf="@+id/radius_bar"
+        app:layout_constraintStart_toStartOf="@+id/radius_bar"
+        app:layout_constraintTop_toTopOf="@+id/waypoints_text" />
+
+    <SeekBar
+        android:id="@+id/randomness_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:max="100"
+        app:layout_constraintEnd_toEndOf="@+id/waypoints_bar"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/waypoints_bar"
+        app:layout_constraintTop_toBottomOf="@+id/waypoints_bar" />
+
+    <TextView
+        android:id="@+id/randomness_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/randomness"
+        app:layout_constraintStart_toStartOf="@+id/waypoints_text"
+        app:layout_constraintTop_toBottomOf="@+id/waypoints_text" />
+
+    <TextView
+        android:id="@+id/randomness_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/_0_0"
+        app:layout_constraintEnd_toEndOf="@+id/waypoints_value"
+        app:layout_constraintStart_toStartOf="@+id/waypoints_value"
+        app:layout_constraintTop_toBottomOf="@+id/waypoints_value" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

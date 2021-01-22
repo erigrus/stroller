@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Stroller</string>
+    <string name="generate_stroll">Generate Stroll</string>
+    <string name="radius_km">Radius (km)</string>
+    <string name="_0">0</string>
+    <string name="complexity">Complexity</string>
+    <string name="randomness">Randomness</string>
+    <string name="_0_0">0.00</string>
+</resources>
